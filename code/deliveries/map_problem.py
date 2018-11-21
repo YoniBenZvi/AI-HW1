@@ -34,7 +34,7 @@ class MapProblem(GraphProblem):
 
     def __init__(self, roads: Roads, source_junction_id: int, target_junction_id: int):
         initial_state = MapState(source_junction_id)
-        super(MapProblem, self).__init__(initial_state)
+        super(MapProblem, self).__init__(initial_state) # call the parent's __init__ on the current instance
         self.roads = roads
         self.target_junction_id = target_junction_id
         self.name += '(src: {} dst: {})'.format(source_junction_id, target_junction_id)
@@ -60,7 +60,7 @@ class MapProblem(GraphProblem):
             # TODO: calculate the distance between `junction` and the successor's junction.
             # Use the method `calc_air_distance_from()` of class `Junction` to measure this distance.
             # Do NOT use `link.distance` here.
-            operator_cost = 1  # TODO: modify this!
+            operator_cost = junction.calc_air_distance_from(self.roads[link.target])  # TODO: modify this!
 
             # Yield the successor state and the cost of the operator we used to get this successor.
             yield successor_state, operator_cost
@@ -73,4 +73,4 @@ class MapProblem(GraphProblem):
 
         # TODO: modify the returned value to indicate whether `state` is a final state.
         # You may use the problem's input parameters (stored as fields of this object by the constructor).
-        return state.junction_id == 14593
+        return state.junction_id == self.target_junction_id

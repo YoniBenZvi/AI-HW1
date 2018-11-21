@@ -26,7 +26,7 @@ class GraphProblemState(abc.ABC):
         This method is used to determine whether two given state objects represents the same state.
         Notice: Never compare floats using `==` operator!
         """
-        ...
+        ...     # same as the pass keyword
 
     @abc.abstractmethod
     def __hash__(self):
