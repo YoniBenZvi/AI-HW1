@@ -107,8 +107,9 @@ class RelaxedDeliveriesProblem(GraphProblem):
                 continue
             if junction not in self.gas_stations:
                 successor_state = RelaxedDeliveriesState(junction,
-                                                         state_to_expand.dropped_so_far.union(frozenset(junction)),
-                                                         fuel_left)
+                                                         state_to_expand.dropped_so_far.union(
+                                                             [state_to_expand.current_location]), fuel_left)
+
             else:
                 successor_state = RelaxedDeliveriesState(junction, state_to_expand.dropped_so_far,
                                                          self.gas_tank_capacity)

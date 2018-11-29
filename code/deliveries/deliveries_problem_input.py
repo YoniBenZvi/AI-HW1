@@ -26,7 +26,7 @@ class DeliveriesProblemInput(NamedTuple):
         Loads and parses a deliveries-problem-input from a file. Usage example:
         >>> problem_input = DeliveriesProblemInput.load_from_file('big_delivery.in', roads)
         """
-        
+
         with open(Consts.get_data_file_path(input_file_name), 'r') as input_file:
             input_type = input_file.readline().strip()
             if input_type != 'DeliveriesProblemInput':
@@ -40,7 +40,8 @@ class DeliveriesProblemInput(NamedTuple):
                 gas_tank_init_fuel = float(input_file.readline())
             except:
                 raise ValueError('Invalid input file `{}`.'.format(input_file_name))
-        return DeliveriesProblemInput(input_name, start_point, drop_points, gas_stations, gas_tank_capacity, gas_tank_init_fuel)
+        return DeliveriesProblemInput(input_name, start_point, drop_points, gas_stations, gas_tank_capacity,
+                                      gas_tank_init_fuel)
 
     def store_to_file(self, input_file_name: str):
         with open(Consts.get_data_file_path(input_file_name), 'w') as input_file:
