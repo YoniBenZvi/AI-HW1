@@ -39,7 +39,11 @@ class RelaxedDeliveriesState(GraphProblemState):
         TODO: implement this method!
         Notice: Never compare floats using `==` operator! Use `fuel_as_int` instead of `fuel`.
         """
-        raise NotImplemented()  # TODO: remove!
+        assert isinstance(other, RelaxedDeliveriesState)
+
+        return self.current_location == other.current_location and self.dropped_so_far == other.dropped_so_far \
+               and self.fuel_as_int == other.fuel_as_int
+        # raise NotImplemented()  # TODO: remove!
 
     def __hash__(self):
         """
@@ -53,7 +57,8 @@ class RelaxedDeliveriesState(GraphProblemState):
                 Otherwise the upper requirement would not met.
                 In our case, use `fuel_as_int`.
         """
-        raise NotImplemented()  # TODO: remove!
+        return hash((self.current_location, self.fuel_as_int, self.dropped_so_far))
+        # raise NotImplemented()  # TODO: remove!
 
     def __str__(self):
         """
@@ -93,7 +98,24 @@ class RelaxedDeliveriesProblem(GraphProblem):
         """
         assert isinstance(state_to_expand, RelaxedDeliveriesState)
 
-        raise NotImplemented()  # TODO: remove!
+        # Iterate over all the problem's remaining possible stop points and check whether they're close enough to reach
+        for junction in self.possible_stop_points.difference(state_to_expand.dropped_so_far):
+            fuel_left = state_to_expand.fuel - state_to_expand.current_location.calc_air_distance_from(junction)
+            operator_cost = state_to_expand.fuel - fuel_left
+            # Create the successor state (it should be an instance of class `RelaxedDeliveriesState`).
+            if fuel_left < 0:
+                continue
+            if junction not in self.gas_stations:
+                successor_state = RelaxedDeliveriesState(junction,
+                                                         state_to_expand.dropped_so_far.union(frozenset(junction)),
+                                                         fuel_left)
+            else:
+                successor_state = RelaxedDeliveriesState(junction, state_to_expand.dropped_so_far,
+                                                         self.gas_tank_capacity)
+
+            # Yield the successor state and the cost of the operator we used to get this successor.
+            yield successor_state, operator_cost
+        # raise NotImplemented()  # TODO: remove!
 
     def is_goal(self, state: GraphProblemState) -> bool:
         """
@@ -102,7 +124,9 @@ class RelaxedDeliveriesProblem(GraphProblem):
         """
         assert isinstance(state, RelaxedDeliveriesState)
 
-        raise NotImplemented()  # TODO: remove!
+        return state.dropped_so_far == self.drop_points
+
+        # raise NotImplemented()  # TODO: remove!
 
     def solution_additional_str(self, result: 'SearchResult') -> str:
         """This method is used to enhance the printing method of a found solution."""
