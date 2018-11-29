@@ -33,20 +33,23 @@ def plot_distance_and_expanded_wrt_weight_figure(
     # See documentation here:
     # https://matplotlib.org/2.0.0/api/_as_gen/matplotlib.axes.Axes.plot.html
     # You can also search google for additional examples.
-    raise NotImplemented()
+    # raise NotImplemented()
 
     # ax1: Make the y-axis label, ticks and tick labels match the line color.
     ax1.set_ylabel('distance traveled', color='b')
     ax1.tick_params('y', colors='b')
     ax1.set_xlabel('weight')
+    ax1.plot(weights, total_distance, 'b')
 
     # Create another axis for the #expanded curve.
     ax2 = ax1.twinx()
-
+    ax2.set_ylabel('states expanded', color='r')
+    ax2.tick_params('y', colors='r')
+    ax2.set_xlabel('weight')
+    ax2.plot(weights, total_expanded, 'r')
     # TODO: Plot the total expanded with ax2. Use `ax2.plot(...)`.
     # TODO: ax2: Make the y-axis label, ticks and tick labels match the line color.
     # TODO: Make this curve colored red with solid line style.
-    raise NotImplemented()
 
     fig.tight_layout()
     plt.show()
@@ -64,34 +67,46 @@ def run_astar_for_weights_in_range(heuristic_type: HeuristicFunctionType, proble
     #    the #expanded.
     # Call the function `plot_distance_and_expanded_by_weight_figure()`
     #  with that data.
-    raise NotImplemented()  # TODO: remove!
+    final_costs = []
+    num_expanded_states = []
+    weights = np.linspace(0.5, 1, 20, True)
+    for weight in weights:
+        astar_instance = AStar(AirDistHeuristic, weight)
+        res = astar_instance.solve_problem(problem)
+        final_costs.append(res.final_search_node.cost)
+        num_expanded_states.append(res.nr_expanded_states)
+    plot_distance_and_expanded_wrt_weight_figure(weights, final_costs, num_expanded_states)
 
 
 def map_problem():
     print()
     print('Solve the map problem.')
 
-    # Ex.8
-    map_prob = MapProblem(roads, 54, 549)
-    uc = UniformCost()
-    res = uc.solve_problem(map_prob)
-    print(res)
+    # # Ex.8
+    # map_prob = MapProblem(roads, 54, 549)
+    # uc = UniformCost()
+    # res = uc.solve_problem(map_prob)
+    # print(res)
 
-    # Ex.10
-    # TODO: create an instance of `AStar` with the `NullHeuristic`,
-    #       solve the same `map_prob` with it and print the results (as before).
-    # Notice: AStar constructor receives the heuristic *type* (ex: `MyHeuristicClass`),
-    #         and not an instance of the heuristic (eg: not `MyHeuristicClass()`).
+    # # Ex.10
+    # # TODO: create an instance of `AStar` with the `NullHeuristic`,
+    # #       solve the same `map_prob` with it and print the results (as before).
+    # # Notice: AStar constructor receives the heuristic *type* (ex: `MyHeuristicClass`),
+    # #         and not an instance of the heuristic (eg: not `MyHeuristicClass()`).
+    # map_prob = MapProblem(roads, 54, 549)
+    # astar_instance = AStar(NullHeuristic, 0.5)
+    # res = astar_instance.solve_problem(map_prob)
+    # print(res)
+    # # exit()  # TODO: remove!
+
+    # # Ex.11
+    # # TODO: create an instance of `AStar` with the `AirDistHeuristic`,
+    # #       solve the same `map_prob` with it and print the results (as before).
     map_prob = MapProblem(roads, 54, 549)
-    astar_instance = AStar(NullHeuristic, 0.5)
+    astar_instance = AStar(AirDistHeuristic, 0.5)
     res = astar_instance.solve_problem(map_prob)
     print(res)
-    # exit()  # TODO: remove!
-
-    # Ex.11
-    # TODO: create an instance of `AStar` with the `AirDistHeuristic`,
-    #       solve the same `map_prob` with it and print the results (as before).
-    exit()  # TODO: remove!
+    # # exit()  # TODO: remove!
 
     # Ex.12
     # TODO:
@@ -102,7 +117,8 @@ def map_problem():
     #    (upper in this file).
     # 3. Call here the function `run_astar_for_weights_in_range()`
     #    with `AirDistHeuristic` and `map_prob`.
-    exit()  # TODO: remove!
+    map_prob = MapProblem(roads, 54, 549)
+    run_astar_for_weights_in_range(AirDistHeuristic, map_prob)
 
 
 # --------------------------------------------------------------------
