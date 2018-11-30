@@ -107,15 +107,16 @@ class RelaxedDeliveriesProblem(GraphProblem):
                 continue
             if junction not in self.gas_stations:
                 successor_state = RelaxedDeliveriesState(junction,
-                                                         state_to_expand.dropped_so_far.union(
-                                                             [state_to_expand.current_location]), fuel_left)
+                                                         state_to_expand.dropped_so_far.union([junction]),
+                                                         fuel_left)
 
             else:
                 successor_state = RelaxedDeliveriesState(junction, state_to_expand.dropped_so_far,
                                                          self.gas_tank_capacity)
 
             # Yield the successor state and the cost of the operator we used to get this successor.
-            yield successor_state, operator_cost
+            yield (successor_state, operator_cost)
+            # yield (state, state_to_expand.current_location.calc_air_distance_from(junction))
         # raise NotImplemented()  # TODO: remove!
 
     def is_goal(self, state: GraphProblemState) -> bool:
@@ -125,7 +126,7 @@ class RelaxedDeliveriesProblem(GraphProblem):
         """
         assert isinstance(state, RelaxedDeliveriesState)
 
-        return state.dropped_so_far == self.drop_points
+        return len(self.drop_points.difference(state.dropped_so_far)) == 0
 
         # raise NotImplemented()  # TODO: remove!
 

@@ -71,7 +71,7 @@ def run_astar_for_weights_in_range(heuristic_type: HeuristicFunctionType, proble
     num_expanded_states = []
     weights = np.linspace(0.5, 1, 20, True)
     for weight in weights:
-        astar_instance = AStar(AirDistHeuristic, weight)
+        astar_instance = AStar(heuristic_type, weight)
         res = astar_instance.solve_problem(problem)
         final_costs.append(res.final_search_node.cost)
         num_expanded_states.append(res.nr_expanded_states)
@@ -133,22 +133,26 @@ def relaxed_deliveries_problem():
     big_deliveries_prob = RelaxedDeliveriesProblem(big_delivery)
 
     # Ex.16
-    # TODO: create an instance of `AStar` with the `MaxAirDistHeuristic`,
-    #       solve the `big_deliveries_prob` with it and print the results (as before).
-    astar_instance = AStar(MaxAirDistHeuristic, 0.5)
-    res = astar_instance.solve_problem(big_deliveries_prob)
-    print(res)
-    exit()  # TODO: remove!
+    # # TODO: create an instance of `AStar` with the `MaxAirDistHeuristic`,
+    # #       solve the `big_deliveries_prob` with it and print the results (as before).
+    # astar_instance = AStar(MaxAirDistHeuristic, 0.5)
+    # res = astar_instance.solve_problem(big_deliveries_prob)
+    # print(res)
+    # exit()  # TODO: remove!
 
     # Ex.17
     # TODO: create an instance of `AStar` with the `MSTAirDistHeuristic`,
     #       solve the `big_deliveries_prob` with it and print the results (as before).
-    exit()  # TODO: remove!
+    # astar_instance = AStar(MSTAirDistHeuristic,0.5)
+    # res = astar_instance.solve_problem(big_deliveries_prob)
+    # print(res)
+    # exit()  # TODO: remove!
 
     # Ex.18
     # TODO: Call here the function `run_astar_for_weights_in_range()`
     #       with `MSTAirDistHeuristic` and `big_deliveries_prob`.
-    exit()  # TODO: remove!
+    run_astar_for_weights_in_range(MaxAirDistHeuristic, big_deliveries_prob)
+    # exit()  # TODO: remove!
 
     # Ex.24
     # TODO:
