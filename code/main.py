@@ -83,30 +83,28 @@ def map_problem():
     print('Solve the map problem.')
 
     # # Ex.8
-    # map_prob = MapProblem(roads, 54, 549)
-    # uc = UniformCost()
-    # res = uc.solve_problem(map_prob)
-    # print(res)
+    map_prob = MapProblem(roads, 54, 549)
+    uc = UniformCost()
+    res = uc.solve_problem(map_prob)
+    print(res)
 
     # # Ex.10
     # # TODO: create an instance of `AStar` with the `NullHeuristic`,
     # #       solve the same `map_prob` with it and print the results (as before).
     # # Notice: AStar constructor receives the heuristic *type* (ex: `MyHeuristicClass`),
     # #         and not an instance of the heuristic (eg: not `MyHeuristicClass()`).
-    # map_prob = MapProblem(roads, 54, 549)
-    # astar_instance = AStar(NullHeuristic, 0.5)
-    # res = astar_instance.solve_problem(map_prob)
-    # print(res)
-    # # exit()  # TODO: remove!
+    map_prob = MapProblem(roads, 54, 549)
+    astar_instance = AStar(NullHeuristic, 0.5)
+    res = astar_instance.solve_problem(map_prob)
+    print(res)
 
     # # # Ex.11
     # # # TODO: create an instance of `AStar` with the `AirDistHeuristic`,
     # # #       solve the same `map_prob` with it and print the results (as before).
-    # map_prob = MapProblem(roads, 54, 549)
-    # astar_instance = AStar(AirDistHeuristic, 0.5)
-    # res = astar_instance.solve_problem(map_prob)
-    # print(res)
-    # # # exit()  # TODO: remove!
+    map_prob = MapProblem(roads, 54, 549)
+    astar_instance = AStar(AirDistHeuristic, 0.5)
+    res = astar_instance.solve_problem(map_prob)
+    print(res)
 
     # Ex.12
     # TODO:
@@ -117,8 +115,8 @@ def map_problem():
     #    (upper in this file).
     # 3. Call here the function `run_astar_for_weights_in_range()`
     #    with `AirDistHeuristic` and `map_prob`.
-    # map_prob = MapProblem(roads, 54, 549)
-    # run_astar_for_weights_in_range(AirDistHeuristic, map_prob)
+    map_prob = MapProblem(roads, 54, 549)
+    run_astar_for_weights_in_range(AirDistHeuristic, map_prob)
 
 
 # --------------------------------------------------------------------
@@ -138,7 +136,6 @@ def relaxed_deliveries_problem():
     # astar_instance = AStar(MaxAirDistHeuristic, 0.5)
     # res = astar_instance.solve_problem(big_deliveries_prob)
     # print(res)
-    # exit()  # TODO: remove!
 
     # Ex.17
     # TODO: create an instance of `AStar` with the `MSTAirDistHeuristic`,
@@ -146,13 +143,11 @@ def relaxed_deliveries_problem():
     # astar_instance = AStar(MSTAirDistHeuristic,0.5)
     # res = astar_instance.solve_problem(big_deliveries_prob)
     # print(res)
-    # exit()  # TODO: remove!
 
     # Ex.18
     # TODO: Call here the function `run_astar_for_weights_in_range()`
     #       with `MSTAirDistHeuristic` and `big_deliveries_prob`.
-    run_astar_for_weights_in_range(MaxAirDistHeuristic, big_deliveries_prob)
-    # exit()  # TODO: remove!
+    # run_astar_for_weights_in_range(MaxAirDistHeuristic, big_deliveries_prob)
 
     # Ex.24
     # TODO:
@@ -174,7 +169,37 @@ def relaxed_deliveries_problem():
     #    (x-axis). Of course that the costs of A*, and deterministic
     #    greedy are not dependent with the iteration number, so
     #    these two should be represented by horizontal lines.
-    exit()  # TODO: remove!
+    greedy_stochastic_results = []
+    big_delivery = DeliveriesProblemInput.load_from_file('big_delivery.in', roads)
+    big_deliveries_prob = RelaxedDeliveriesProblem(big_delivery)
+    astar_instance_w_05 = AStar(MSTAirDistHeuristic, 0.5)
+    astar_instance_w_1 = AStar(MSTAirDistHeuristic, 1)
+    res_astar_instance_w_05 = astar_instance_w_05.solve_problem(big_deliveries_prob)
+    res_astar_instance_w_1 = astar_instance_w_1.solve_problem(big_deliveries_prob)
+    iterations_num = 100
+    for i in range(iterations_num):
+        greedy_stochastic_instance = GreedyStochastic(MSTAirDistHeuristic)
+        greedy_stochastic_results.append(
+            greedy_stochastic_instance.solve_problem(big_deliveries_prob).final_search_node.cost)
+
+    greedy_stochastic_best_results_per_iteration = greedy_stochastic_results
+    for i in range(iterations_num):
+        greedy_stochastic_best_results_per_iteration[i] = min(greedy_stochastic_results[0:i + 1])
+    print(greedy_stochastic_best_results_per_iteration)
+    plt.plot(range(iterations_num), greedy_stochastic_best_results_per_iteration, label='Greedy Stochastic')
+    plt.plot(range(iterations_num), [res_astar_instance_w_05.final_search_node.cost] * iterations_num,
+             label='wA* with w=0.5')
+    plt.plot(range(iterations_num), [res_astar_instance_w_1.final_search_node.cost] * iterations_num,
+             label='wA* with w=1')
+
+    plt.xlabel("iteration number")
+    plt.ylabel("solution cost")
+    plt.title("Solution cost as a function of the iteration number using MSTAirDistHeuristic")
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+    # exit()  # TODO: remove!
 
 
 def strict_deliveries_problem():
@@ -197,9 +222,9 @@ def strict_deliveries_problem():
 
 
 def main():
-    map_problem()
+    # map_problem()
     relaxed_deliveries_problem()
-    strict_deliveries_problem()
+    # strict_deliveries_problem()
 
 
 if __name__ == '__main__':

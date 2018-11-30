@@ -48,7 +48,6 @@ class AStar(BestFirstSearch):
         """
         w = self.heuristic_weight
         return self.heuristic_function.estimate(search_node.state) * w + (1 - w) * search_node.cost
-        # raise NotImplemented()  # TODO: remove!
 
     def _open_successor_node(self, problem: GraphProblem, successor_node: SearchNode):
         """
