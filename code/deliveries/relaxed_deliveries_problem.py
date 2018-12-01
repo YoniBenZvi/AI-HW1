@@ -58,7 +58,6 @@ class RelaxedDeliveriesState(GraphProblemState):
                 In our case, use `fuel_as_int`.
         """
         return hash((self.current_location, self.fuel_as_int, self.dropped_so_far))
-        # raise NotImplemented()  # TODO: remove!
 
     def __str__(self):
         """
@@ -117,7 +116,6 @@ class RelaxedDeliveriesProblem(GraphProblem):
             # Yield the successor state and the cost of the operator we used to get this successor.
             yield (successor_state, operator_cost)
             # yield (state, state_to_expand.current_location.calc_air_distance_from(junction))
-        # raise NotImplemented()  # TODO: remove!
 
     def is_goal(self, state: GraphProblemState) -> bool:
         """

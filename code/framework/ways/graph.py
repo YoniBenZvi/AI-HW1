@@ -41,7 +41,7 @@ class Junction(NamedTuple):
         return hash(self.index)
 
     def calc_air_distance_from(self, other_junction: 'Junction') -> float:
-        assert(isinstance(other_junction, Junction))
+        assert (isinstance(other_junction, Junction))
         return tools.compute_distance(self.coordinates, other_junction.coordinates)
 
 

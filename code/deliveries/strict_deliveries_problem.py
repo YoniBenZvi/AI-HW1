@@ -57,6 +57,7 @@ class StrictDeliveriesProblem(RelaxedDeliveriesProblem):
         return self._cache.get(key)
 
     def expand_state_with_costs(self, state_to_expand: GraphProblemState) -> Iterator[Tuple[GraphProblemState, float]]:
+        from deliveries.map_heuristics import AirDistHeuristic
         """
         TODO: implement this method!
         This method represents the `Succ: S -> P(S)` function of the strict deliveries problem.
@@ -67,8 +68,39 @@ class StrictDeliveriesProblem(RelaxedDeliveriesProblem):
         For each successor, a pair of the successor state and the operator cost is yielded.
         """
         assert isinstance(state_to_expand, StrictDeliveriesState)
+        # Iterate over all the problem's remaining possible stop points and check whether they're close enough to reach
+        for junction in self.possible_stop_points.difference(state_to_expand.dropped_so_far):
+            # skip if junction is the current junction we're at
+            if junction.index == state_to_expand.current_location.index:
+                continue
+            cache_source = state_to_expand.current_location.index
+            cache_destination = junction.index
+            map_problem_a_star_instance = AStar(AirDistHeuristic, 0.5)
+            operator_cost = self._get_from_cache((cache_source, cache_destination)) or \
+                            map_problem_a_star_instance.solve_problem(
+                                MapProblem(self.roads, cache_source, cache_destination)).final_search_node.cost
+            self._insert_to_cache((cache_source, cache_destination), operator_cost)
 
-        raise NotImplemented()  # TODO: remove!
+            # The link has been found, therefore we're calculating the fuel that'll be left
+            # after traveling via this link.
+            fuel_left = state_to_expand.fuel - operator_cost
+
+            # if not enough fuel to reach there, continue to next possible junction
+            if fuel_left < 0:
+                continue
+
+            # Create the successor state (it should be an instance of class `StrictDeliveriesState`).
+            if junction not in self.gas_stations:
+                successor_state = StrictDeliveriesState(junction,
+                                                        state_to_expand.dropped_so_far.union([junction]),
+                                                        fuel_left)
+
+            else:
+                successor_state = StrictDeliveriesState(junction, state_to_expand.dropped_so_far,
+                                                        self.gas_tank_capacity)
+
+            # Yield the successor state and the cost of the operator we used to get this successor.
+            yield (successor_state, operator_cost)
 
     def is_goal(self, state: GraphProblemState) -> bool:
         """
@@ -77,4 +109,4 @@ class StrictDeliveriesProblem(RelaxedDeliveriesProblem):
         """
         assert isinstance(state, StrictDeliveriesState)
 
-        raise NotImplemented()  # TODO: remove!
+        return len(self.drop_points.difference(state.dropped_so_far)) == 0
