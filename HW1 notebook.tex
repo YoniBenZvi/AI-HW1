@@ -1,0 +1,683 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{HW1 notebook}
+    
+    
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    Introduction to Artificial Intelligence 236501 Homework 1
+
+Yoni Ben-Zvi 203668900 Danny Priymak 307003434
+
+    \subsubsection{Question 1}\label{question-1}
+
+The requested table is produced by the following code:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{from} \PY{n+nn}{tabulate} \PY{k}{import} \PY{n}{tabulate}
+        \PY{k+kn}{import} \PY{n+nn}{math}
+        
+        \PY{n}{list1} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{11}\PY{p}{)}\PY{p}{:}
+            \PY{n}{list2} \PY{o}{=} \PY{p}{[}\PY{n}{x}\PY{p}{,} \PY{n}{math}\PY{o}{.}\PY{n}{factorial}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{n}{math}\PY{o}{.}\PY{n}{factorial}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{l+m+mi}{5} \PY{o}{*}\PY{o}{*} \PY{p}{(}\PY{n}{x} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+            \PY{n}{list1}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{list2}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{tabulate}\PY{p}{(}\PY{n}{list1}\PY{p}{,} \PY{n}{headers}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{l = 0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{l = 5}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{tablefmt}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{orgtbl}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+|   k |   l = 0 |         l = 5 |
+|-----+---------+---------------|
+|   1 |       1 |             1 |
+|   2 |       2 |            10 |
+|   3 |       6 |           150 |
+|   4 |      24 |          3000 |
+|   5 |     120 |         75000 |
+|   6 |     720 |       2250000 |
+|   7 |    5040 |      78750000 |
+|   8 |   40320 |    3150000000 |
+|   9 |  362880 |  141750000000 |
+|  10 | 3628800 | 7087500000000 |
+
+    \end{Verbatim}
+
+    \subsubsection{Question 2}\label{question-2}
+
+The branching factor's extremum values are: Maximum = \(k+l\) because if
+our graph is a complete graph, each vertex is connected to all other gas
+stations and all other delivery points. If the current vertex is
+\(v_0\), then it is connected to all other \(k+l\) vertices of the
+graph. This is the maximal number of vertices it can be connected to
+using the operators defined in the exercise. Minimum = \(1\) because if
+the graph is 1-regular then the maximal outdegree of each vertex
+is 1, and therefore the graph's branching factor is 1.
+
+    \subsubsection{Question 3}\label{question-3}
+
+Yes. Consider a graph that contains two gas station vertices \(f_1,f_2\)
+that are connected to each other, and the distance between them is less
+than the maximal distance the scooter can go when its fuel tank is full.
+Suppose the scooter is currently at \(f_1\). Therefore, its fuel tank is
+full. Let us denote this state as \(S_1\). Suppose it chooses to go to
+\(f_2\). Once it arrives at \(f_2\), its fuel level is once again full.
+Lastly, suppose the scooter chooses to go back to \(f_1\). Once it
+arrives there (for the second time), its fuel capacity is once again
+full. Note that the current state is identical to \(S_1\), as The sets
+\(T,F\) have not changed during this path's traversal, and the fuel
+levels were constant. Therefore, we have found a directed cycle in the
+graph.
+
+    \subsubsection{Question 4}\label{question-4}
+
+Let us first distinguish between the start state
+\(\left(v_0,d_0,\textrm{Ord},\emptyset \right)\) and all other states.
+Since we assume no order or gas station can be placed in \(v_0\), the
+only time the scooter will be at \(v_0\) is when the algorithm starts.
+Hence, we can count this state only once.
+
+Once we have the distinction above, the number of options for the
+scooter's location is \(k+l\), as it can only stop at gas stations
+(which there are \(l\) of) or delivery drop-off locations (which there
+are \(k\) of).
+
+As for the fuel level \(d\), if we assume the possible fuel levels are
+real values between \(0\) and \(d_\textrm{refuel}\) in, say,
+double-precision, then the number of options is
+\(2^{64}=18446744073709551616\) (with maximal resolution possible with
+respect to the real value range \([0,d_\textrm{refuel}]\)).
+
+As was pointed out in the exercise, we can keep track of only one of the
+sets \(T,F\), since the other is its complimentary set with respect to
+\([k] =\{ 1,\dots,k\}\). Without loss of generality let us keep track of
+only \(T\). Hence, the number of possible sets \(T\) is
+\(|\mathcal{P}([k])|=2^k\), where \(\mathcal{P}()\) denotes the power
+set.
+
+To summarize, the resulting number of states is given by the formula
+\[((k+l)\cdot (2^{64})\cdot 2^{k})+1\]
+
+    \subsubsection{Question 5}\label{question-5}
+
+Yes. Assume that \(|T|\geq 2\) and that the scooter has just enough gas
+to reach a certain delivery drop-off point \(t_i\) from its current
+location, and have exactly zero fuel left upon arrival at \(t_i\). The
+operation \(|T|\leftarrow |T|-1\) is computed, and the scooter cannot go
+further to any delivery drop-off point nor gas station in the graph, and
+the new state it's at is not a goal state since \(|T|\geq 1\).
+
+    \subsubsection{Question 6}\label{question-6}
+
+\[\text{Succ}_{1}\left(\left(v_{1},d_{1},T_{1},F_{1}\right)\right) = \left\{ \left(v_{2},d_{2},T_{2},F_{2}\right)\in S:\ \substack{v_{2}\in\text{ Ord }\\
+d_{2}=d_{1}-\text{ Dist}\left(v_{1},v_{2}\right)\quad\land\quad d_{1}-\text{ Dist}\left(v_{1},v_{2}\right)\geq0\\
+\exists i\in\left[k\right]:\quad i\in T_{1}\quad\land\quad T_{2}=T_{1}\setminus\left\{ i\right\} \quad\land\quad F_{2}=F_{1}\cup\left\{ i\right\} \\
+\text{There exists a directed path \ensuremath{v_{1}\to\dots\to v_{2}} on the map}
+}
+\right\}\] \[
+\text{Succ}_{2}\left(\left(v_{1},d_{1},T_{1},F_{1}\right)\right)    =\left\{ \left(v_{2},d_{2},T_{2},F_{2}\right)\in S:\ \substack{v_{2}\in\text{ GasStations }\\
+d_{2}=d_{\text{refuel}}\quad\land\quad d_{1}-\text{ Dist}\left(v_{1},v_{2}\right)\geq0\\
+T_{1}=T_{2}\quad\land\quad F_{1}=F_{2}\\
+\text{There exists a directed path \ensuremath{v_{1}\to\dots\to v_{2}} on the map}
+}
+\right\} \] \[
+\text{Succ}{\left(\left(v_{1},d_{1},T_{1},F_{1}\right)\right)}  =\text{Succ}_{1}\left(\left(v_{1},d_{1},T_{1},F_{1}\right)\right)\ \cup\ \text{Succ}_{2}\left(\left(v_{1},d_{1},T_{1},F_{1}\right)\right)\]
+
+    \subsubsection{Question 7}\label{question-7}
+
+If we ignore the fuel constraint and assume that \(d_0\) is very big
+such that the scooter does not need to refuel during its trip, the goal
+state minimal depth must be at least the number of delivery drop-off
+points \(k\), as the scooter must go through all of them to get to a
+goal state. If we reconsider the fuel constraint, each refuel operation
+adds one level of depth to the search, hence increasing the depth.
+Therefore, the minimal depth is \(k\).
+
+    \subsubsection{Question 8}\label{question-8}
+
+load\_map\_from\_csv: 1.52sec
+
+Solve the map problem. Map(src: 54 dst: 549) UniformCost time: 0.59
+\#dev: 17355 total\_cost: 7465.52897 \textbar{}path\textbar{}: 137 path:
+{[} 54, 55, 56, 57, 58, 59, 60, 28893, 14580, 14590, 14591, 14592,
+14593, 81892, 25814, 81, 26236, 26234, 1188, 33068, 33069, 33070, 15474,
+33071, 5020, 21699, 33072, 33073, 33074, 16203, 9847, 9848, 9849, 9850,
+9851, 335, 9852, 82906, 82907, 82908, 82909, 95454, 96539, 72369, 94627,
+38553, 72367, 29007, 94632, 96540, 9269, 82890, 29049, 29026, 82682,
+71897, 83380, 96541, 82904, 96542, 96543, 96544, 96545, 96546, 96547,
+82911, 82928, 24841, 24842, 24843, 5215, 24844, 9274, 24845, 24846,
+24847, 24848, 24849, 24850, 24851, 24852, 24853, 24854, 24855, 24856,
+24857, 24858, 24859, 24860, 24861, 24862, 24863, 24864, 24865, 24866,
+82208, 82209, 82210, 21518, 21431, 21432, 21433, 21434, 21435, 21436,
+21437, 21438, 21439, 21440, 21441, 21442, 21443, 21444, 21445, 21446,
+21447, 21448, 21449, 21450, 21451, 621, 21452, 21453, 21454, 21495,
+21496, 539, 540, 541, 542, 543, 544, 545, 546, 547, 548, 549{]}
+
+    \subsubsection{Question 11}\label{question-11}
+
+load\_map\_from\_csv: 1.39sec
+
+Solve the map problem. Map(src: 54 dst: 549) A* (h=AirDist, w=0.500)
+time: 0.09 \#dev: 2016 total\_cost: 7465.52897 \textbar{}path\textbar{}:
+137 path: {[} 54, 55, 56, 57, 58, 59, 60, 28893, 14580, 14590, 14591,
+14592, 14593, 81892, 25814, 81, 26236, 26234, 1188, 33068, 33069, 33070,
+15474, 33071, 5020, 21699, 33072, 33073, 33074, 16203, 9847, 9848, 9849,
+9850, 9851, 335, 9852, 82906, 82907, 82908, 82909, 95454, 96539, 72369,
+94627, 38553, 72367, 29007, 94632, 96540, 9269, 82890, 29049, 29026,
+82682, 71897, 83380, 96541, 82904, 96542, 96543, 96544, 96545, 96546,
+96547, 82911, 82928, 24841, 24842, 24843, 5215, 24844, 9274, 24845,
+24846, 24847, 24848, 24849, 24850, 24851, 24852, 24853, 24854, 24855,
+24856, 24857, 24858, 24859, 24860, 24861, 24862, 24863, 24864, 24865,
+24866, 82208, 82209, 82210, 21518, 21431, 21432, 21433, 21434, 21435,
+21436, 21437, 21438, 21439, 21440, 21441, 21442, 21443, 21444, 21445,
+21446, 21447, 21448, 21449, 21450, 21451, 621, 21452, 21453, 21454,
+21495, 21496, 539, 540, 541, 542, 543, 544, 545, 546, 547, 548, 549{]}
+
+    \subsubsection{Question 12}\label{question-12}
+
+When the weight is 0.5, the algorithm is exactly the A* algorithm. As
+the weight increases, the algorithm gets closer to the greedy best
+search algorithm, with a weight value of 1 being the greedy best search
+algorithm itself.
+
+As the weight increases, the algorithm relies more and more on the
+heuristic function and less and less on the cost of the current path, as
+we've seen in class. In addition, as the weight increases, we can see
+that the computation becomes computationally easier as less nodes are
+being expanded. 
+
+    \subsubsection{Question 14}\label{question-14}
+
+The MaxAirDist heuristic is indeed admissable, since it does not take
+into account all other nodes that need to be visited excecpt for the
+node with the maximal air distance from the current node that has not
+been visited yet.
+
+In other words, if there is only one more node that needs to be visited
+before a goal state is reached, the MaxAirDist heuristic will return the
+exact distance to the goal state, which is \(h^{*}\), else, it will
+return a smaller value than \(h^{*}\), hence it is indeed admissable.
+
+    \subsubsection{Question 16}\label{question-16}
+
+Solve the relaxed deliveries problem. RelaxedDeliveries(big\_delivery)
+A* (h=MaxAirDist, w=0.500) time: 3.82 \#dev: 3908 total\_cost:
+40844.21165 \textbar{}path\textbar{}: 11 path: {[}33919, 18409, 77726,
+26690, 31221, 63050, 84034, 60664, 70557, 94941, 31008{]} gas-stations:
+{[}31221, 70557{]}
+
+    \subsubsection{Question 17}\label{question-17}
+
+Solve the relaxed deliveries problem. RelaxedDeliveries(big\_delivery)
+A* (h=MSTAirDist, w=0.500) time: 1.19 \#dev: 87 total\_cost: 40844.21165
+\textbar{}path\textbar{}: 11 path: {[}33919, 18409, 77726, 26690, 31221,
+63050, 84034, 60664, 70557, 94941, 31008{]} gas-stations: {[}31221,
+70557{]}
+
+    \subsubsection{Question 18}\label{question-18}
+
+    \subsubsection{Question 19}\label{question-19}
+
+\[
+\forall x_{i}\in x^{t}:\quad\text{Pr}\left(x_{i}\right)=\frac{\left(\frac{x_{i}}{\alpha}\right)^{-1/T}}{\sum_{j}\left(\frac{x_{j}}{\alpha}\right)^{-1/T}}=\frac{x_{i}^{-1/T}\cdot\alpha^{1/T}}{\sum_{j}\left(x_{j}^{-1/T}\cdot\alpha^{1/T}\right)}=\frac{x_{i}^{-1/T}\cdot\alpha^{1/T}}{\alpha^{1/T}\sum_{j}x_{j}^{-1/T}}=\frac{x_{i}^{-1/T}}{\sum_{j}x_{j}^{-1/T}}
+\]
+
+    \subsubsection{Question 20}\label{question-20}
+
+    \subsubsection{Question 21}\label{question-21}
+
+First let us notice that the expression can be rewritten in the form:
+\[\forall x_{i}\in x:\quad\text{Pr}\left(x_{i}\right)=\frac{x_{i}^{-1/T}}{\sum_{j\in\left[N\right]}x_{j}^{-1/T}}=\dots=\frac{1}{1+\sum_{i\neq j}\left(\frac{x_{i}}{x_{j}}\right)^{1/T}}\]
+And by taking the limit \(T\to0\), we have two options:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  if \(x_{i}<x_{j}\) for every \(i\neq j\) then
+  \(\sum_{i\neq j}\left(\frac{x_{i}}{x_{j}}\right)^{1/T}\xrightarrow[T\to0]{}0\)
+  and \(\lim_{T\to0}\text{Pr}\left(x_{i}\right)=\frac{1}{1+0}=1\). This
+  is the case where
+  \(x_{i}=\min_{j}\left\{ x_{j}\right\} _{j=1}^{N}=\alpha\) is the
+  minimal element.
+\item
+  if there exists at least one \(j\) such that \(x_{i}\geq x_{j}\) then
+  we get:
+\end{enumerate}
+
+\(\qquad\)(a)
+\(\left(\frac{x_{i}}{x_{j}}\right)^{1/T}\xrightarrow[T\to0]{}\infty\) if
+\(x_{i}>x_{j}\), which leads to
+\(\lim_{T\to0}\text{Pr}\left(x_{i}\right)=\infty\). This is the case
+where \(x_{i}\) is not the minimal element of
+\(\left\{ x_{j}\right\} _{j=1}^{N}\).
+
+\(\qquad\)(b)
+\(\left(\frac{x_{i}}{x_{j}}\right)^{1/T}=\left(1\right)^{1/T}=1\xrightarrow[T\to0]{}1\),
+if there is exactly one \(j\) that satisfies the equality
+\(x_{i}=x_{j}\).
+
+\(\qquad\)(c) If there are \(\left\{ x_{k}\right\} _{k\in K}\) where
+\(K\subseteq N\) and \(2\leq\left|K\right|\leq\left|N\right|\) that
+satisfy \(x_{i}=x_{k}\) for all \(k\in K\), and all other coordinates
+satisfy \(x_{i}<x_{j}\) (such that their summands vanish), we get
+\(\lim_{T\to0}\text{Pr}\left(x_{i}\right)=\frac{1}{1+\left|K\right|\cdot1+\left(0+\dots+0\right)}=\frac{1}{1+K}\).
+
+    \subsubsection{Question 22}\label{question-22}
+
+By using the equivalent expression of the probability function from
+question 21 and taking the limit \(T\to\infty\) while assuming
+\(x_{j}\neq0\) for all \(j\), we get
+\[\lim_{T\to\infty}\text{Pr}\left(x_{i}\right)=\lim_{T\to\infty}\frac{1}{1+\sum_{i\neq j}\left(\underbrace{\frac{x_{i}}{x_{j}}}_{\neq0}\right)^{1/T}}=\frac{1}{1+\underbrace{\left(1+\dots+1\right)}_{N-1\text{ times}}}=\frac{1}{N}\]
+
+and since in our case \(N=5\), we get that indeed the limit is
+\(\frac{1}{5}=0.2\), as can be seen in the plot.
+
+    \subsubsection{Question 24}\label{question-24}
+
+    \subsubsection{Question 26}\label{question-26}
+
+    \subsubsection{Question 27}\label{question-27}
+
+Let us consider the following Relaxed Deliveries Heuristic function
+\(h\):
+
+For a state \(s\), define the heuristic value \(h(s)\) as the final cost
+found by the Relaxed Deliveries Problem with the initial state as the
+current state the heuristic function received as input, and the final
+state as the current problem's final state. The gas stations, drop
+points, current fuel level and full-tank fuel level are all the same as
+in the original problem. If the Relaxed Deliveries problem did not find
+a solution from the current state to the goal state, let \(h\) return
+\(\infty\), or equivalently, some very big number that represents a very
+high, undesireable heuristic value, such that the algorithm would rather
+not choose.
+
+\(h\) is an admissable heuristic, since its return values always
+represent a path whose total cost is comprised of aerial distances,
+which are always lower than the true costs the scooter must pay to reach
+the goal state. If \(h\) returns \(\infty\), then necessarily there is
+no valid path for the strict problem as well, so we might as well treat
+its cost as \(\infty\) as well, since we cannot actually get to a goal
+state.
+
+    \subsubsection{Question 28}\label{question-28}
+
+The results we got are:
+
+StrictDeliveries(small\_delivery) A* (h=RelaxedProb, w=0.500) time:
+16.68 \#dev: 80 total\_cost: 14254.79234 \textbar{}path\textbar{}: 8
+path: {[}43516, 67260, 17719, 43454, 43217, 32863, 7873, 42607{]}
+gas-stations: {[}17719, 32863{]}
+
+When comparing the result to question 26, we get that for \(w=0.5\), the
+total solution cost is the same, but the number of total states expanded
+is better by \(33\)\% (120 vs. 80).
+
+for \(w\geq0.58\) we get that the algorithm from question 26 is superior
+in terms of states expanded. Taking such a \(w\) will result in a total
+cost increase of about 600.
+
+As for the the runtime, the algorithm from question 26 for \(w=0.58\)
+took 11.06 seconds to finish. The algorithm in this question tool 16.68
+seconds. This is a substantial runtime setback, as it is worse by about
+\(50.81\)\% relative to question 26.
+
+    \subsubsection{Theoretical Question}\label{theoretical-question}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  From the fact that \(h\) is admissible we know that \(\forall s\in S\)
+  such that \(\text{Applicable}_h (s)\) is True ,
+  \(h_0(h,s)=h(s)\leq h^*(s)\). In addition, \(\forall s\in S\) such
+  that \(\text{Applicable}_h (s)\) is False , \(h_0(h,s)=0 \leq h^*(s)\)
+  because the price function is bounded from below by \(\delta>0\) so
+  \(h^*(s)\geq 0, \forall s\in S\). From that we conclude that \(h_0\)
+  is also admissible.
+\item
+  We assume that the state space is a tree. Our suggested Heuristic is:
+\end{enumerate}
+
+\[h'\left(v\right)=\begin{cases}
+h\left(v\right) & \text{if Applicable}_{h}\left(v\right)\text{is true}\\
+0 & \text{if Applicable}_{h}\left(v\right)\text{is false} \land  \text{isGoal}\left(v\right)\\
+\min_{u\in\text{Succ}\left(v\right)}\left(\text{cost}\left(v,u\right)\right) & \text{otherwise}
+\end{cases}\text{ is true }\] If \(\text{Applicable}_h (v)\) is True
+then \(h'(v) \leq h^*(v)\) because \(h\) is admissible and if
+isGoal(\(v\)) is True and \(\text{Applicable}_h(v)\) is False then
+\(h'(v) = 0 \leq h^*(v)\) because the function price is positive.
+Otherwise, from the fact that the price function is positive we know the
+minimal cost of a path from \(v\) to a goal state is at least the
+minimal cost of an edge from \(v\) to one of its successors, therefore,
+\(h'(v) \leq h^*(v)\) and it means \(h'\) is admissible as needed. Now,
+for each \(v\) in the tree \(h_0(v) \leq h'(v)\) because if
+\(\text{Applicable}_h (v)\) is True or if isGoal(\(v\)) is True then
+\(h_0(v) = h'(v)\) and otherwise \(h_0(v) = 0 < \delta \leq h'(v)\),
+\(h'\) is more informed than \(h_0\). 3. As can be seen in section b,
+the fact that the state space is a tree was not actually used, therefore
+the same heuristic function \(h'\) can be used on any state space.
+
+Another solution could be to add information to each state \(s\) in our
+state space; whether it has been visited already or not. If it hasn't
+been visited its heuristic value will be \(h'(s)\) (from section b). If
+it has been visited then the heuristic value that will be returned is
+\(h_0(h,s)\). Since for every state \(s\), \(h'(s)\geq h_0(h,s)\) and
+clearly \(h_0(h,s)\geq h_0(h,s)\), in addition to what was defined and
+explained in section b, the heuristic function we've suggested is this
+section is indeed more informed than \(h_0\), and still admissible.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  The claim is correct.
+\end{enumerate}
+
+Let us first note that the \(A^*\) algorithm with the given
+\(h_0(h',s)\) heuristic actually behaves like the Uniform Cost
+algorithm, since the heuristic value of all nodes is zero (as in Uniform
+Cost) except the initial node, and the initial node's heuristic value
+doesn't actually affect the algorithm's behaviour since the initial node
+does not 'compete' with any other node before being expanded.
+
+From the fact that \(h'(s_0)\) is given (\(s_0\) is the initial state)
+and equals \(h^*(s_0)\), we can use a variation of the DFS-L algorithm,
+which replaces the depth restriction input with a cost restriction
+instead, and use it with a restriction equal to \(h'(s_0)\). the
+algorithm in this case is admissible because it is given in the question
+that there exists a solution with a cost of \(h'(s_0)\) and it is
+optimal, hence the algorithm will necessarily find such a solution, as
+we've learned for DFS-L.
+
+    
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
