@@ -69,7 +69,7 @@ def run_astar_for_weights_in_range(heuristic_type: HeuristicFunctionType, proble
     #  with that data.
     final_costs = []
     num_expanded_states = []
-    weights = np.linspace(0.5, 1, 2, True)  # TODO: change this back from 2 to 20
+    weights = np.linspace(0.5, 1, 20, True)
     for weight in weights:
         astar_instance = AStar(heuristic_type, weight)
         res = astar_instance.solve_problem(problem)
@@ -133,21 +133,22 @@ def relaxed_deliveries_problem():
     # Ex.16
     # # TODO: create an instance of `AStar` with the `MaxAirDistHeuristic`,
     # #       solve the `big_deliveries_prob` with it and print the results (as before).
-    # astar_instance = AStar(MaxAirDistHeuristic, 0.5)
-    # res = astar_instance.solve_problem(big_deliveries_prob)
-    # print(res)
+    astar_instance = AStar(MaxAirDistHeuristic, 0.5)
+    res = astar_instance.solve_problem(big_deliveries_prob)
+    print(res)
 
     # Ex.17
     # TODO: create an instance of `AStar` with the `MSTAirDistHeuristic`,
     #       solve the `big_deliveries_prob` with it and print the results (as before).
-    # astar_instance = AStar(MSTAirDistHeuristic,0.5)
-    # res = astar_instance.solve_problem(big_deliveries_prob)
-    # print(res)
+    astar_instance = AStar(MSTAirDistHeuristic, 0.5)
+    res = astar_instance.solve_problem(big_deliveries_prob)
+    print(res)
 
     # Ex.18
     # TODO: Call here the function `run_astar_for_weights_in_range()`
     #       with `MSTAirDistHeuristic` and `big_deliveries_prob`.
-    # run_astar_for_weights_in_range(MaxAirDistHeuristic, big_deliveries_prob)
+    run_astar_for_weights_in_range(MSTAirDistHeuristic, big_deliveries_prob)
+    exit()
 
     # Ex.24
     # TODO:
@@ -182,11 +183,11 @@ def relaxed_deliveries_problem():
         greedy_stochastic_results.append(
             greedy_stochastic_instance.solve_problem(big_deliveries_prob).final_search_node.cost)
 
-    greedy_stochastic_best_results_per_iteration = greedy_stochastic_results
+    greedy_stochastic_best_results_per_iteration = greedy_stochastic_results.copy()
     for i in range(iterations_num):
         greedy_stochastic_best_results_per_iteration[i] = min(greedy_stochastic_results[0:i + 1])
-    print(greedy_stochastic_best_results_per_iteration)
-    plt.plot(range(iterations_num), greedy_stochastic_best_results_per_iteration, label='Greedy Stochastic')
+    plt.plot(range(iterations_num), greedy_stochastic_best_results_per_iteration, label='Anytime Greedy Stochastic')
+    plt.plot(range(iterations_num), greedy_stochastic_results, label='Greedy Stochastic')
     plt.plot(range(iterations_num), [res_astar_instance_w_05.final_search_node.cost] * iterations_num,
              label='wA* with w=0.5')
     plt.plot(range(iterations_num), [res_astar_instance_w_1.final_search_node.cost] * iterations_num,
@@ -198,8 +199,6 @@ def relaxed_deliveries_problem():
     plt.legend()
     plt.grid()
     plt.show()
-
-    # exit()  # TODO: remove!
 
 
 def strict_deliveries_problem():
@@ -219,12 +218,13 @@ def strict_deliveries_problem():
     # Ex.28
     # TODO: create an instance of `AStar` with the `RelaxedDeliveriesHeuristic`,
     #       solve the `small_deliveries_strict_problem` with it and print the results (as before).
-    exit()  # TODO: remove!
+    a_star_instance = AStar(RelaxedDeliveriesHeuristic)
+    print(a_star_instance.solve_problem(small_deliveries_strict_problem))
 
 
 def main():
-    # map_problem()
-    # relaxed_deliveries_problem()
+    map_problem()
+    relaxed_deliveries_problem()
     strict_deliveries_problem()
 
 

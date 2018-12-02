@@ -1,0 +1,317 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass heb-article
+\use_default_options true
+\maintain_unincluded_children false
+\language hebrew
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize 10
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date true
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2.5cm
+\topmargin 2.5cm
+\rightmargin 2.5cm
+\bottommargin 2.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip smallskip
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style swedish
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\text{Succ}_{1}\left(\left(v_{1},d_{1},T_{1},F_{1}\right)\right) & =\left\{ \left(v_{2},d_{2},T_{2},F_{2}\right)\in S:\ \substack{v_{2}\in\text{ Ord }\\
+d_{2}=d_{1}-\text{ Dist}\left(v_{1},v_{2}\right)\quad\land\quad d_{1}-\text{ Dist}\left(v_{1},v_{2}\right)\geq0\\
+\exists i\in\left[k\right]:\quad i\in T_{1}\quad\land\quad T_{2}=T_{1}\setminus\left\{ i\right\} \quad\land\quad F_{2}=F_{1}\cup\left\{ i\right\} \\
+\text{There exists a directed path \ensuremath{v_{1}\to\dots\to v_{2}} on the map}
+}
+\right\} \\
+\text{Succ}_{2}\left(\left(v_{1},d_{1},T_{1},F_{1}\right)\right) & =\left\{ \left(v_{2},d_{2},T_{2},F_{2}\right)\in S:\ \substack{v_{2}\in\text{ GasStations }\\
+d_{2}=d_{\text{refuel}}\quad\land\quad d_{1}-\text{ Dist}\left(v_{1},v_{2}\right)\geq0\\
+T_{1}=T_{2}\quad\land\quad F_{1}=F_{2}\\
+\text{There exists a directed path \ensuremath{v_{1}\to\dots\to v_{2}} on the map}
+}
+\right\} \\
+\text{Succ\left(\left(v_{1},d_{1},T_{1},F_{1}\right)\right)} & =\text{Succ}_{1}\left(\left(v_{1},d_{1},T_{1},F_{1}\right)\right)\ \cup\ \text{Succ}_{2}\left(\left(v_{1},d_{1},T_{1},F_{1}\right)\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\forall x_{i}\in x^{t}:\quad\text{Pr}\left(x_{i}\right)=\frac{\left(\frac{x_{i}}{\alpha}\right)^{-1/T}}{\sum_{j}\left(\frac{x_{j}}{\alpha}\right)^{-1/T}}=\frac{x_{i}^{-1/T}\cdot\alpha^{1/T}}{\sum_{j}\left(x_{j}^{-1/T}\cdot\alpha^{1/T}\right)}=\frac{x_{i}^{-1/T}\cdot\cancel{\alpha^{1/T}}}{\cancel{\alpha^{1/T}}\sum_{j}x_{j}^{-1/T}}=\frac{x_{i}^{-1/T}}{\sum_{j}x_{j}^{-1/T}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+First let us notice that the expression can be rewritten in the form
+\begin_inset Formula 
+\[
+\text{\ensuremath{\forall x_{i}\in x:\quad}Pr}\left(x_{i}\right)=\frac{x_{i}^{-1/T}}{\sum_{j\in\left[N\right]}x_{j}^{-1/T}}=\dots=\frac{1}{1+\sum_{i\neq j}\left(\frac{x_{i}}{x_{j}}\right)^{1/T}}
+\]
+
+\end_inset
+
+And by taking the limit 
+\begin_inset Formula $T\to0$
+\end_inset
+
+, we have two options:
+\end_layout
+
+\begin_layout Enumerate
+
+\lang english
+if 
+\begin_inset Formula $x_{i}<x_{j}$
+\end_inset
+
+ for every 
+\begin_inset Formula $i\neq j$
+\end_inset
+
+ then 
+\begin_inset Formula $\sum_{i\neq j}\left(\frac{x_{i}}{x_{j}}\right)^{1/T}\xrightarrow[T\to0]{}0$
+\end_inset
+
+ and 
+\begin_inset Formula $\lim_{T\to0}\text{Pr}\left(x_{i}\right)=\frac{1}{1+0}=1$
+\end_inset
+
+.
+ This is the case where 
+\begin_inset Formula $x_{i}=\min_{j}\left\{ x_{j}\right\} _{j=1}^{N}=\alpha$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\lang english
+if there exists at least one 
+\begin_inset Formula $j$
+\end_inset
+
+ such that 
+\begin_inset Formula $x_{i}\geq x_{j}$
+\end_inset
+
+ then we get: 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\lang english
+\begin_inset Formula $\left(\frac{x_{i}}{x_{j}}\right)^{1/T}\xrightarrow[T\to0]{}\infty$
+\end_inset
+
+ if 
+\begin_inset Formula $x_{i}>x_{j}$
+\end_inset
+
+, which leads to 
+\begin_inset Formula $\lim_{T\to0}\text{Pr}\left(x_{i}\right)=\infty$
+\end_inset
+
+.
+ This is the case where 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ is not the minimal element of 
+\begin_inset Formula $\left\{ x_{j}\right\} _{j=1}^{N}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\lang english
+\begin_inset Formula $\left(\frac{x_{i}}{x_{j}}\right)^{1/T}=\left(1\right)^{1/T}=1\xrightarrow[T\to0]{}1$
+\end_inset
+
+, if there is exactly one 
+\begin_inset Formula $j$
+\end_inset
+
+ that satisfies the equality 
+\begin_inset Formula $x_{i}=x_{j}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\lang english
+If there are 
+\begin_inset Formula $\left\{ x_{k}\right\} _{k\in K}$
+\end_inset
+
+ where 
+\begin_inset Formula $K\subseteq N$
+\end_inset
+
+ and 
+\begin_inset Formula $2\leq\left|K\right|\leq\left|N\right|$
+\end_inset
+
+ that satisfy 
+\begin_inset Formula $x_{i}=x_{k}$
+\end_inset
+
+ for all 
+\begin_inset Formula $k\in K$
+\end_inset
+
+, and all other coordinates satisfy 
+\begin_inset Formula $x_{i}<x_{j}$
+\end_inset
+
+ (such that their summands vanish), we get 
+\begin_inset Formula $\lim_{T\to0}\text{Pr}\left(x_{i}\right)=\frac{1}{1+\left|K\right|\cdot1+\left(0+\dots+0\right)}=\frac{1}{1+K}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+By using the equivalent expression of the probability function from question
+ 21 and taking the limit 
+\begin_inset Formula $T\to\infty$
+\end_inset
+
+ while assuming 
+\begin_inset Formula $x_{j}\neq0$
+\end_inset
+
+ for all 
+\begin_inset Formula $j$
+\end_inset
+
+, we get
+\begin_inset Formula 
+\[
+\lim_{T\to\infty}\text{Pr}\left(x_{i}\right)=\lim_{T\to\infty}\frac{1}{1+\sum_{i\neq j}\left(\underbrace{\frac{x_{i}}{x_{j}}}_{\neq0}\right)^{1/T}}=\frac{1}{1+\underbrace{\left(1+\dots+1\right)}_{N-1\text{ times}}}=\frac{1}{N}
+\]
+
+\end_inset
+
+and since in our case 
+\begin_inset Formula $N=5$
+\end_inset
+
+, we get that indeed the limit is 
+\begin_inset Formula $0.2$
+\end_inset
+
+, as can be seen in the plot.
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+\begin_inset Formula 
+\[
+h'\left(v\right)=\begin{cases}
+h\left(v\right) & \text{if Applicable}_{h}\left(v\right)\text{ is true}\\
+0 & \text{if Applicable}_{h}\left(v\right)\text{ is false \ensuremath{\land} isGoal}\left(v\right)\\
+\min_{u\in\text{Succ}\left(v\right)}\left(\text{cost}\left(v,u\right)\right)
+\end{cases}\text{ is true }
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
